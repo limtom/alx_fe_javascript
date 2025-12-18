@@ -11,6 +11,7 @@
     <button id="newQuote">Show New Quote</button>
     <button id="exportBtn">Export Quotes</button>
     <br />
+    <!-- Input new quote -->
     <form>
       <input
         id="newQuoteText"
@@ -27,7 +28,14 @@
       <button id="add-btn">Add Quote</button>
     </form>
 
+    <!-- Import file -->
     <input type="file" id="importFile" accept=".json" />
+
+    <!-- Filtering -->
+    <select id="categoryFilter" onchange="filterQuotes()">
+      <option value="all">All Categories</option>
+      <!-- Dynamically populated categories -->
+    </select>
     <script src="script.js"></script>
   </body>
 </html>

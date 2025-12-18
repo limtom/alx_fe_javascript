@@ -126,4 +126,25 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     fileReader.readAsText(event.target.files[0]);
   }
+
+  //Filtering
+  function populateCategories(element, categories) {
+    for (const category of categories) {
+      const opt = document.createElement("option");
+      opt.value = category;
+      opt.textContent = category;
+      element.appendChild(opt);
+    }
+  }
+
+  //Get the select input
+  categorySelect = document.getElementById("categoryFilter");
+
+  //Get unique categories
+  const uniqueCategories = quotes
+    .map((quote) => quote.category)
+    .filter((category, index, arr) => arr.indexOf(category) === index);
+
+  // Populate the select
+  populateCategories(categorySelect, uniqueCategories);
 });
