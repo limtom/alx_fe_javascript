@@ -28,12 +28,20 @@ document.addEventListener("DOMContentLoaded", function () {
   quoteBtn.addEventListener("click", function () {
     showRandomQuote();
   });
-
   const showRandomQuote = function () {
     //Generate a randomm number from 0 to 4
     let num = Math.floor(Math.random() * quotes.length);
     let quoteToDisplay = quotes[num].text;
 
+    // INNERHTML APPROACH
+    const blockquote = `<blockquote>${quoteToDisplay}</blockquote>`;
+
+    //Get the quoteDisplay
+    const quoteContainer = document.getElementById("quoteDisplay");
+    quoteContainer.innerHTML = blockquote;
+
+    /*
+    DYNAMIC_METHOD
     //Create a blockquote element to display the quote
     const quoteBlock = document.createElement("blockquote");
     const textNode = document.createTextNode(quoteToDisplay);
@@ -49,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //If it exist replace otherwise append
     existing?.replaceWith(quoteBlock) ?? quoteContainer.appendChild(quoteBlock);
+    */
   };
 
   //Add new quote
