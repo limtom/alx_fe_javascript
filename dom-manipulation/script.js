@@ -67,6 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
   //Listen for event
   addBtn.addEventListener("click", function (e) {
     e.preventDefault();
+    createAddQuoteForm();
+  });
+
+  const createAddQuoteForm = function () {
     //Get the input form values
     let quoteText = document.getElementById("newQuoteText").value.trim();
     let quoteCategory = document
@@ -91,5 +95,5 @@ document.addEventListener("DOMContentLoaded", function () {
     quoteText.value = "";
     quoteCategory.value = "";
     console.log(quotes);
-  });
+  };
 });
