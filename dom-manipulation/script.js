@@ -1,44 +1,35 @@
 document.addEventListener("DOMContentLoaded", function () {
-  //Create an array of quotes object
-  let quotes = [
-    {
-      text: "The only way to do great work is to love what you do.",
-      category: "Inspiration",
-    },
-    {
-      text: "Be the change that you wish to see in the world.",
-      category: "Wisdom",
-    },
-    {
-      text: "It does not matter how slowly you go as long as you do not stop.",
-      category: "Perseverance",
-    },
-    {
-      text: "In the middle of difficulty lies opportunity.",
-      category: "Optimism",
-    },
-    {
-      text: "The journey of a thousand miles begins with one step.",
-      category: "Motivation",
-    },
-  ];
+  //Get quotes from local storage
+  let quotes = JSON.parse(localStorage.getItem("quotes")) || [];
+
+  //Get the quote container
+  const quoteContainer = document.getElementById("quoteDisplay");
+
+  //Display last viewed quotes
+  quoteContainer.innerHTML = `<blockquote>
+  ${JSON.parse(sessionStorage.getItem("last-quote")).text}
+    </blockquote>`;
 
   //Get the button
   const quoteBtn = document.getElementById("newQuote");
   quoteBtn.addEventListener("click", function () {
     showRandomQuote();
   });
+
+  //Show random quote function
   const showRandomQuote = function () {
     //Generate a randomm number from 0 to 4
     let num = Math.floor(Math.random() * quotes.length);
-    let quoteToDisplay = quotes[num].text;
+    let quoteToDisplay = quotes[num]?.text;
 
     // INNERHTML APPROACH
     const blockquote = `<blockquote>${quoteToDisplay}</blockquote>`;
 
-    //Get the quoteDisplay
-    const quoteContainer = document.getElementById("quoteDisplay");
+    //Update the quote container
     quoteContainer.innerHTML = blockquote;
+
+    //Store last view quote on session storage
+    sessionStorage.setItem("last-quote", JSON.stringify(quotes[num]));
 
     /*
     DYNAMIC_METHOD
@@ -91,9 +82,41 @@ document.addEventListener("DOMContentLoaded", function () {
     //Push quote to the array
     quotes.push(quoteObj);
 
+    //Save the quotes to localstorage
+    localStorage.setItem("quotes", JSON.stringify(quotes));
+
     //Clear the quotes
     quoteText.value = "";
     quoteCategory.value = "";
     console.log(quotes);
   };
+
+  //Export quote funct
+  //Select the export btn
+  const exportBtn = document.getElementById("exportBtn");
+
+  exportBtn.addEventListener("click", function () {
+    exportToJson(quotes);
+  });
+
+  function exportToJson(data, fileName = `quotes.json`) {
+    //Create a downlaod link
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(
+      new Blob([JSON.stringify(data, null, 2)], { type: "application/json" })
+    );
+    a.download = fileName.endsWith(".json") ? fileName : fileName + ".json";
+    a.click();
+  }
+
+  // File inport
+  const fileInput = document.getElementById("importFile");
+  fileInput.addEventListener("onchange", function (e) {
+    console.log(e.target);
+    importFromJsonFile(e);
+  });
+
+  function importFromJsonFile(event) {
+    console.log(event);
+  }
 });
