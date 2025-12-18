@@ -112,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // File inport
   const fileInput = document.getElementById("importFile");
   fileInput.addEventListener("change", function (e) {
-    console.log(e.target);
     importFromJsonFile(e);
   });
 
@@ -121,7 +120,8 @@ document.addEventListener("DOMContentLoaded", function () {
     fileReader.onload = function (event) {
       const importedQuotes = JSON.parse(event.target.result);
       quotes.push(...importedQuotes);
-      saveQuotes();
+      //Save quotes to local storage
+      localStorage.setItem("quotes", JSON.stringify(quotes));
       alert("Quotes imported successfully!");
     };
     fileReader.readAsText(event.target.files[0]);
