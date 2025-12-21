@@ -158,13 +158,13 @@ document.addEventListener("DOMContentLoaded", function () {
     //Set the value of the select
     categorySelect.value = e.target.value;
     //filter the quotes based on selection
-    filterQuotes(e.target.value);
+    filterQuote(e.target.value);
 
     //Save selection to local storage
     localStorage.setItem("filter-selected", e.target.value);
   });
 
-  function filterQuotes(category) {
+  function filterQuote(category) {
     let quotesFiltered = quotes.filter((quote) => quote.category === category);
     localStorage.setItem("filtered-quotes", JSON.stringify(filteredQuotes));
 
