@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //Get the select input
+  categorySelect = document.getElementById("categoryFilter");
+
+  //Set the the default select value
+  categorySelect.value = "all";
+
   //Get quotes from local storage
   let quotes = JSON.parse(localStorage.getItem("quotes")) || [];
+  let filteredQuotes =
+    JSON.parse(localStorage.getItem("filtered-quotes")) && [];
 
   //Get the quote container
   const quoteContainer = document.getElementById("quoteDisplay");
@@ -137,9 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  //Get the select input
-  categorySelect = document.getElementById("categoryFilter");
-
   //Get unique categories
   const uniqueCategories = quotes
     .map((quote) => quote.category)
@@ -147,4 +152,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Populate the select
   populateCategories(categorySelect, uniqueCategories);
+
+  //Capture the selected category
+  categorySelect.addEventListener("change", function (e) {
+    //Set the value of the select
+    categorySelect.value = e.target.value;
+    //filter the quotes based on selection
+    filterQuotes(e.target.value);
+
+    //Save selection to local storage
+    localStorage.setItem("filter-selected", e.target.value);
+  });
+
+  function filterQuotes(category) {
+    let quotesFiltered = quotes.filter((quote) => quote.category === category);
+    localStorage.setItem("filtered-quotes", JSON.stringify(filteredQuotes));
+
+    console.log(quotes);
+    console.log(filteredQuotes);
+    return filteredQuotes;
+  }
 });
