@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .filter((category, index, arr) => arr.indexOf(category) === index);
 
   // Populate the select
-  populateCategories(categorySelect, uniqueCategories);
+  populateCategories(selectedCategory, uniqueCategories);
 
   //Capture the selected category
   categorySelect.addEventListener("change", function (e) {
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
     filterQuote(e.target.value);
 
     //Save selection to local storage
-    localStorage.setItem("filter-selected", e.target.value);
+    localStorage.setItem("selectedCategory", e.target.value);
   });
 
   function filterQuote(category) {
